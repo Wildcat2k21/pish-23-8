@@ -1,5 +1,8 @@
 class bankDeposit:
+    """Класс для представления базового вклада с основными параметрами"""
+    
     def __init__(self, name, minAmount, currency, periodMonths, rate):
+        """Инициализация основного вклада с параметрами"""
         self.name = name
         self.minAmount = minAmount
         self.currency = currency
@@ -7,9 +10,11 @@ class bankDeposit:
         self.rate = rate  # годовая процентная ставка
 
     def calculateProfit(self, amount):
+        """Метод для расчета прибыли от вклада. Должен быть реализован в подклассах"""
         raise NotImplementedError("Метод должен быть реализован в подклассах")
 
     def getConditions(self):
+        """Метод для получения условий вклада"""
         return (f"{self.name}\n"
                 f"Минимальная сумма: {self.minAmount:,} {self.currency}\n"
                 f"Срок: {self.periodMonths} мес.\n"
@@ -17,7 +22,10 @@ class bankDeposit:
 
 
 class termDeposit(bankDeposit):
+    """Класс для срочного вклада с простыми процентами"""
+    
     def calculateProfit(self, amount):
+        """Метод для расчета прибыли от срочного вклада с простыми процентами"""
         if amount < self.minAmount:
             raise ValueError(f"Минимальная сумма для вклада {self.minAmount} {self.currency}")
         
@@ -26,16 +34,21 @@ class termDeposit(bankDeposit):
         return round(profit, 2)
 
     def __str__(self):
+        """Метод для строки представления вклада"""
         return self.getConditions() + "\nТип начисления: простые проценты"
 
 
 class BonusDeposit(bankDeposit):
+    """Класс для бонусного вклада с дополнительным бонусом при определенной сумме"""
+    
     def __init__(self, name, minAmount, currency, periodMonths, rate, bonusThreshold, bonusRate):
+        """Инициализация бонусного вклада с дополнительными параметрами бонуса"""
         super().__init__(name, minAmount, currency, periodMonths, rate)
         self.bonusThreshold = bonusThreshold
         self.bonusRate = bonusRate  # % от прибыли
 
     def calculateProfit(self, amount):
+        """Метод для расчета прибыли от бонусного вклада"""
         if amount < self.minAmount:
             raise ValueError(f"Минимальная сумма для вклада {self.minAmount} {self.currency}")
         
@@ -50,12 +63,16 @@ class BonusDeposit(bankDeposit):
         return round(baseProfit, 2)
 
     def __str__(self):
+        """Метод для строки представления бонусного вклада"""
         return (self.getConditions() + 
                 f"\nБонус: {self.bonusRate}% от прибыли при сумме > {self.bonusThreshold:,} {self.currency}")
 
 
 class capDeposit(bankDeposit):
+    """Класс для вклада с капитализацией процентов"""
+    
     def calculateProfit(self, amount):
+        """Метод для расчета прибыли от вклада с капитализацией процентов"""
         if amount < self.minAmount:
             raise ValueError(f"Минимальная сумма для вклада {self.minAmount} {self.currency}")
         
@@ -67,11 +84,15 @@ class capDeposit(bankDeposit):
         return round(profit, 2)
 
     def __str__(self):
+        """Метод для строки представления вклада с капитализацией"""
         return self.getConditions() + "\nТип начисления: с капитализацией процентов"
 
 
 class depositAdvisor:
+    """Класс для консультанта по выбору вкладов"""
+    
     def __init__(self):
+        """Инициализация консультанта с набором вкладов"""
         self.deposits = [
             termDeposit("Срочный+", 10_000, "RUB", 12, 6.5),
             BonusDeposit("Бонусный", 50_000, "RUB", 12, 5.8, 100_000, 10),
@@ -81,6 +102,7 @@ class depositAdvisor:
         ]
 
     def find_best_deposit(self, amount, currency, period):
+        """Метод для поиска лучшего вклада по заданным критериям"""
         suitable = []
         for deposit in self.deposits:
             if (deposit.currency == currency and 
@@ -100,12 +122,14 @@ class depositAdvisor:
         return suitable[0]
 
     def showAllDeposits(self):
+        """Метод для отображения всех доступных вкладов"""
         print("Доступные вклады:")
         for i, deposit in enumerate(self.deposits, 1):
             print(f"{i}. {deposit}\n")
 
 
 def main():
+    """Основная функция для работы с пользователем и выбора вклада"""
     advisor = depositAdvisor()
     
     while True:
@@ -139,4 +163,5 @@ def main():
 
 
 if __name__ == "__main__":
+    # Запуск основной функции
     main()

@@ -1,5 +1,7 @@
 class Pizza:
+    """ Базовый класс для пиццы """
     def __init__(x):
+        """ Инициализация базовой пиццы """
         x.name = "Базовая пицца"
         x.dough = "обычное тесто"
         x.sauce = "кетчуп"
@@ -7,26 +9,33 @@ class Pizza:
         x.price = 0
 
     def prepare(x):
+        """ Подготовка пиццы """
         print(f"Готовим {x.name}:")
         print(f" - замешиваем {x.dough} тесто")
         print(f" - добавляем {x.sauce} соус")
         print(" - добавляем начинку:", ", ".join(x.toppings))
 
     def bake(x):
+        """ Выпекание пиццы """
         print("Выпекаем пиццу... Готово!")
 
     def cut(x):
+        """ Нарезка пиццы """
         print("Нарезаем пиццу на 8 кусочков")
 
     def pack(x):
+        """ Упаковка пиццы """
         print("Упаковываем пиццу в фирменную коробку")
 
     def __str__(x):
+        """ Строковое представление пиццы """
         return f"{x.name} ({x.price} руб.)"
 
 
 class Pepperoni(Pizza):
+    """ Класс пиццы Пепперони """
     def __init__(x):
+        """ Инициализация пиццы Пепперони """
         super().__init__()
         x.name = "Пепперони"
         x.dough = "тонкое"
@@ -36,7 +45,9 @@ class Pepperoni(Pizza):
 
 
 class Barbecue(Pizza):
+    """ Класс пиццы Барбекю """
     def __init__(x):
+        """ Инициализация пиццы Барбекю """
         super().__init__()
         x.name = "Барбекю"
         x.dough = "толстое"
@@ -46,7 +57,9 @@ class Barbecue(Pizza):
 
 
 class Seafood(Pizza):
+    """ Класс пиццы Дары моря """
     def __init__(x):
+        """ Инициализация пиццы Дары моря """
         super().__init__()
         x.name = "Дары моря"
         x.dough = "тонкое"
@@ -56,19 +69,25 @@ class Seafood(Pizza):
 
 
 class Order:
+    """ Класс заказа """
     orderCounter = 0
+    
     def __init__(x):
+        """ Инициализация заказа """
         Order.orderCounter += 1
         x.orderNumber = Order.orderCounter
         x.pizzas = []
 
     def addPizza(x, pizza):
+        """ Добавление пиццы в заказ """
         x.pizzas.append(pizza)
 
     def calculateTotal(x):
+        """ Расчет общей стоимости заказа """
         return sum(pizza.price for pizza in x.pizzas)
 
     def execute(x):
+        """ Выполнение заказа """
         for pizza in x.pizzas:
             pizza.prepare()
             pizza.bake()
@@ -77,6 +96,7 @@ class Order:
         print(f"Заказ #{x.orderNumber} готов!")
 
     def __str__(x):
+        """ Строковое представление заказа """
         if not x.pizzas:
             return "Заказ пуст"
         pizzasList = "\n".join(f" - {pizza}" for pizza in x.pizzas)
@@ -84,7 +104,9 @@ class Order:
 
 
 class Terminal:
+    """ Класс терминала для заказа пиццы """
     def __init__(x):
+        """ Инициализация терминала """
         x.menu = [
             Pepperoni(),
             Barbecue(),
@@ -93,15 +115,18 @@ class Terminal:
         x.currentOrder = None
 
     def showMenu(x):
+        """ Отображение меню """
         print("Меню пиццерии:")
         for i, pizza in enumerate(x.menu, 1):
             print(f"{i}. {pizza}")
 
     def createOrder(x):
+        """ Создание нового заказа """
         x.currentOrder = Order()
         print("Создан новый заказ")
 
     def processCommand(x, choice):
+        """ Обработка команды пользователя """
         try:
             choice = int(choice)
             if 1 <= choice <= len(x.menu):
@@ -114,6 +139,7 @@ class Terminal:
             print("Пожалуйста, введите номер пиццы")
 
     def acceptPayment(x):
+        """ Обработка оплаты заказа """
         if not x.currentOrder or not x.currentOrder.pizzas:
             print("Нет активного заказа")
             return False
@@ -136,6 +162,7 @@ class Terminal:
                 print("Пожалуйста, введите число")
 
     def run(x):
+        """ Запуск терминала """
         print("Добро пожаловать в пиццерию!")
         x.showMenu()
         x.createOrder()

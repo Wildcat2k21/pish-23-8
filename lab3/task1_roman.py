@@ -1,4 +1,6 @@
 class Roman:
+    """Класс для работы с римскими числами, поддерживающий конвертацию и арифметические операции."""
+    
     _roman_numerals = {
         'I': 1, 'IV': 4, 'V': 5, 'IX': 9,
         'X': 10, 'XL': 40, 'L': 50, 'XC': 90,
@@ -12,6 +14,7 @@ class Roman:
     ]
 
     def __init__(x, value):
+        """Конструктор класса. Принимает либо строку с римским числом, либо целое число."""
         if isinstance(value, str):
             x.value = x.toArabic(value)
         elif isinstance(value, int):
@@ -23,6 +26,7 @@ class Roman:
 
     @staticmethod
     def toArabic(romanStr):
+        """Преобразует римское число в арабское."""
         result = 0
         i = 0
         romanStr = romanStr.upper()
@@ -37,6 +41,7 @@ class Roman:
 
     @staticmethod
     def toRoman(arabicNum):
+        """Преобразует арабское число в римское."""
         if arabicNum <= 0:
             raise ValueError("Roman numbers must be positive")
         roman_num = []
@@ -47,6 +52,7 @@ class Roman:
         return ''.join(roman_num)
 
     def __add__(x, y):
+        """Оператор сложения римских чисел."""
         if isinstance(y, Roman):
             return Roman(x.value + y.value)
         elif isinstance(y, int):
@@ -55,6 +61,7 @@ class Roman:
             raise TypeError("Can only add Roman or int")
 
     def __sub__(x, y):
+        """Оператор вычитания римских чисел."""
         if isinstance(y, Roman):
             result = x.value - y.value
         elif isinstance(y, int):
@@ -66,6 +73,7 @@ class Roman:
         return Roman(result)
 
     def __mul__(x, y):
+        """Оператор умножения римских чисел."""
         if isinstance(y, Roman):
             return Roman(x.value * y.value)
         elif isinstance(y, int):
@@ -74,6 +82,7 @@ class Roman:
             raise TypeError("Can only multiply by Roman or int")
 
     def __truediv__(x, y):
+        """Оператор целочисленного деления римских чисел."""
         if isinstance(y, Roman):
             result = x.value // y.value
         elif isinstance(y, int):
@@ -85,6 +94,7 @@ class Roman:
         return Roman(result)
 
     def __str__(x):
+        """Возвращает строковое представление римского числа."""
         return x.toRoman(x.value)
 
 # Создание объектов
