@@ -2,8 +2,8 @@ from random import choice, randint
 import pygame
 
 # Константы для размеров поля и сетки:
-SCREEN_WIDTH, SCREEN_HEIGHT = 320, 240
-GRID_SIZE = 10
+SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
+GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
 CENTER_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
@@ -21,7 +21,7 @@ APPLE_COLOR = (255, 255, 255)
 SNAKE_COLOR = (255, 255, 255)
 
 # Скорость движения змейки:
-SPEED = 5
+SPEED = 30
 
 # Настройка игрового окна:
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
